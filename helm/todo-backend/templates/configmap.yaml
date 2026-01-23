@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "todo-backend.fullname" . }}-config
+  labels:
+    {{- include "todo-backend.labels" . | nindent 4 }}
+data:
+  corsOrigins: {{ .Values.config.corsOrigins | quote }}
+  jwtAlgorithm: {{ .Values.config.jwtAlgorithm | quote }}

@@ -1,0 +1,41 @@
+.searchBar {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-right: 2.5rem;
+  font-size: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+  background: white;
+  color: #333;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #1a4d2e;
+  box-shadow: 0 0 0 2px rgba(26, 77, 46, 0.2);
+}
+
+.clearButton {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #999;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.clearButton:hover {
+  color: #333;
+}

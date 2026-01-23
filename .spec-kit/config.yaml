@@ -1,0 +1,95 @@
+# Spec-Kit Plus Configuration
+# Phase IV: Local Kubernetes Deployment
+
+name: "Todo AI Chatbot - Phase IV"
+version: "4.0.0"
+phase: "phase4-kubernetes"
+
+specs:
+  architecture:
+    - path: "specs/architecture/kubernetes-overview.md"
+      type: "architecture"
+      phase: "phase4-kubernetes"
+  
+  deployment:
+    - path: "specs/deployment/containerization.md"
+      type: "deployment"
+      phase: "phase4-kubernetes"
+    - path: "specs/deployment/helm-chart.md"
+      type: "deployment"
+      phase: "phase4-kubernetes"
+    - path: "specs/deployment/minikube.md"
+      type: "deployment"
+      phase: "phase4-kubernetes"
+  
+  aiops:
+    - path: "specs/aiops/ai-operations.md"
+      type: "aiops"
+      phase: "phase4-kubernetes"
+
+  frontend:
+    - path: "specs/frontend/chatbot-commands.md"
+      type: "frontend"
+      phase: "phase4-kubernetes"
+
+  meta:
+    - path: "specs/meta/history-provenance.md"
+      type: "meta"
+      phase: "phase4-kubernetes"
+    - path: "specs/meta/phase-labeling.md"
+      type: "meta"
+      phase: "phase4-kubernetes"
+
+artifacts:
+  dockerfiles:
+    - source: "specs/deployment/containerization.md"
+      target: "backend/Dockerfile"
+      component: "backend"
+    - source: "specs/deployment/containerization.md"
+      target: "frontend/Dockerfile"
+      component: "frontend"
+  
+  helm:
+    - source: "specs/deployment/helm-chart.md"
+      target: "helm/todo-backend"
+      component: "backend"
+    - source: "specs/deployment/helm-chart.md"
+      target: "helm/todo-frontend"
+      component: "frontend"
+  
+  scripts:
+    - source: "specs/deployment/minikube.md"
+      target: "scripts/deploy-minikube.sh"
+      component: "deployment"
+    - source: "specs/deployment/minikube.md"
+      target: "scripts/deploy-minikube.ps1"
+      component: "deployment"
+    - source: "specs/deployment/minikube.md"
+      target: "scripts/install-k8s-windows.ps1"
+      component: "deployment"
+    - source: "specs/deployment/minikube.md"
+      target: "scripts/validate-deployment.sh"
+      component: "deployment"
+    - source: "specs/deployment/containerization.md"
+      target: "scripts/test-docker-build.sh"
+      component: "deployment"
+    - source: "specs/deployment/containerization.md"
+      target: "run-containers.bat"
+      component: "deployment"
+
+  history:
+    - source: "specs/meta/history-provenance.md"
+      target: ".spec-kit/history/README.md"
+      component: "provenance"
+    - source: "specs/meta/history-provenance.md"
+      target: ".spec-kit/history/2026-01-21_phase4-kubernetes_initial.md"
+      component: "provenance"
+
+validation:
+  checklist:
+    - "All deployments generated from specs"
+    - "Helm charts install cleanly on Minikube"
+    - "Frontend → Backend → MCP flow works"
+    - "Stateless backend confirmed"
+    - "kubectl-ai and kagent usage documented"
+    - "Judges can run everything locally"

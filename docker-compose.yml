@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # Backend container - FastAPI application
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: todo-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-postgresql://user:password@localhost:5432/todo_db}
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET:-your-secret-key-change-in-production}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000}
+    networks:
+      - todo-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    # Can be run independently: docker-compose up backend
+
+  # Frontend container - React/Vite application served by nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_BACKEND_API_URL=${VITE_BACKEND_API_URL:-http://localhost:8000}
+        - VITE_APP_NAME=${VITE_APP_NAME:-Todo AI Chatbot}
+    container_name: todo-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # Runtime config for config.js - use public URL since this is accessed from browser
+      - BACKEND_API_URL=${BACKEND_API_URL:-http://localhost:8000}
+    # depends_on only controls startup order - containers are still completely separate
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - todo-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    # Can be run independently: docker-compose up frontend
+
+networks:
+  todo-network:
+    driver: bridge

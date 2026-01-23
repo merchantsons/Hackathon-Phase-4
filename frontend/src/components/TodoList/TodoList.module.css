@@ -1,0 +1,57 @@
+.todoList {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.todoList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.todoList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.todoList::-webkit-scrollbar-thumb {
+  background: #1a4d2e;
+  border-radius: 3px;
+}
+
+.todoList::-webkit-scrollbar-thumb:hover {
+  background: #2d5a3d;
+}
+
+.emptyState {
+  background: white;
+  padding: 2rem 1.5rem;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyMessage {
+  font-size: 1rem;
+  color: #999;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .todoList {
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .emptyState {
+    padding: 1.5rem 0.875rem;
+    min-height: 120px;
+    width: 100%;
+  }
+
+  .emptyMessage {
+    font-size: 0.9rem;
+  }
+}
